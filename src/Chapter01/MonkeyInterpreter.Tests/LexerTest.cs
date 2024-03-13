@@ -9,7 +9,7 @@ public class LexerTest
     {
         const string input = "=+(){},;";
 
-        ExpectedToken[] tokenTests = [
+        ExpectedToken[] testTokens = [
             new ExpectedToken(TokenTypes.ASSIGN, "="),
             new ExpectedToken(TokenTypes.PLUS, "+"),
             new ExpectedToken(TokenTypes.LPAREN, "("),
@@ -23,12 +23,12 @@ public class LexerTest
 
         var lexer = new Lexer(input);
 
-        foreach (var (tokenTest, ixToken) in tokenTests.Select((tokenTest, ixToken) => (tokenTest, ixToken)))
+        foreach (var (testToken, ixToken) in testTokens.Select((testToken, ixToken) => (testToken, ixToken)))
         {
             var token = lexer.NextToken();
 
-            Assert.True(token.TokenType == tokenTest.ExpectedType, $"tests[{ixToken}] - TokenType wrong. Expected={tokenTest.ExpectedType}, Actual={token.TokenType}.");
-            Assert.True(token.Literal == tokenTest.ExpectedLiteral, $"tests[{ixToken}] - Literal wrong. Expected={tokenTest.ExpectedLiteral}, Actual={token.Literal}.");
+            Assert.True(token.TokenType == testToken.ExpectedType, $"tests[{ixToken}] - TokenType wrong. Expected={testToken.ExpectedType}, Actual={token.TokenType}.");
+            Assert.True(token.Literal == testToken.ExpectedLiteral, $"tests[{ixToken}] - Literal wrong. Expected={testToken.ExpectedLiteral}, Actual={token.Literal}.");
         }
     }
 
