@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonkeyInterpreter.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonkeyInterpreter", "src\Chapter01\MonkeyInterpreter\MonkeyInterpreter.csproj", "{8045B630-B117-41FC-AA6B-9B5A9763367D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonkeyInterpreter.Repl", "src\Chapter01\MonkeyInterpreter.Repl\MonkeyInterpreter.Repl.csproj", "{68CC8509-00C0-4373-AC4B-65602A685A88}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{8045B630-B117-41FC-AA6B-9B5A9763367D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8045B630-B117-41FC-AA6B-9B5A9763367D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8045B630-B117-41FC-AA6B-9B5A9763367D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68CC8509-00C0-4373-AC4B-65602A685A88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68CC8509-00C0-4373-AC4B-65602A685A88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68CC8509-00C0-4373-AC4B-65602A685A88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68CC8509-00C0-4373-AC4B-65602A685A88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{512D7E70-38AA-4868-89F5-6004054D8EED} = {17617094-C3A5-4C13-8FD3-50131C2C79FD}
 		{8045B630-B117-41FC-AA6B-9B5A9763367D} = {17617094-C3A5-4C13-8FD3-50131C2C79FD}
+		{68CC8509-00C0-4373-AC4B-65602A685A88} = {17617094-C3A5-4C13-8FD3-50131C2C79FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8059175D-149C-488C-89F0-2A89FE9F645F}
