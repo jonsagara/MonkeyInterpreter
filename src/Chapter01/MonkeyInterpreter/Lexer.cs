@@ -50,7 +50,26 @@ public class Lexer
             //
 
             case '=':
-                token = NewToken(tokenType: TokenTypes.ASSIGN, currentChar: CurrentChar);
+                if (PeekChar() == '=')
+                {
+                    // Save the first equals sign.
+                    var firstEquals = CurrentChar;
+
+                    // Read the subsequent equals sign and update the positions.
+                    ReadChar();
+
+                    // The literal is the combination of the two equals signs.
+                    var literal = $"{firstEquals}{CurrentChar}";
+
+                    token = new Token(TokenType: TokenTypes.EQ, Literal: literal);
+                }
+                else
+                {
+                    // The next character is not an equals sign. Treat the current character 
+                    //   as an assignment operator.
+                    token = NewToken(tokenType: TokenTypes.ASSIGN, currentChar: CurrentChar);
+                }
+                
                 break;
 
             case '+':
@@ -62,7 +81,26 @@ public class Lexer
                 break;
 
             case '!':
-                token = NewToken(tokenType: TokenTypes.BANG, currentChar: CurrentChar);
+                if (PeekChar() == '=')
+                {
+                    // Save the exclamation point.
+                    var exclamationPoint = CurrentChar;
+
+                    // Read the subsequent equals sign and update the positions.
+                    ReadChar();
+
+                    // The literal is the combination of the exclamation point and equals sign.
+                    var literal = $"{exclamationPoint}{CurrentChar}";
+
+                    token = new Token(TokenType: TokenTypes.NOT_EQ, Literal: literal);
+                }
+                else
+                {
+                    // The next character is not an equals sign. Treat the current character 
+                    //   as an assignment operator.
+                    token = NewToken(tokenType: TokenTypes.BANG, currentChar: CurrentChar);
+                }
+                
                 break;
 
             case '*':
@@ -191,6 +229,23 @@ public class Lexer
         // Advance the current character and the next character positions.
         Position = ReadPosition;
         ReadPosition++;
+    }
+
+    /// <summary>
+    /// Return the character immediately following the current character. If there is no next character, return
+    /// the null terminator.
+    /// </summary>
+    private char PeekChar()
+    {
+        if (ReadPosition >= Input.Length)
+        {
+            // The "next character" position is past the end of the input string. There are no more characters
+            //   to peek. Return a null terminator to indicate this.
+            return '\0';
+        }
+
+        // Return the next character to be read.
+        return Input[ReadPosition];
     }
 
     private string ReadIdentifier()

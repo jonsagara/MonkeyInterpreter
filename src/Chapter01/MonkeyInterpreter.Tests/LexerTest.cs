@@ -118,6 +118,9 @@ if (5 < 10) {
 } else {
     return false;
 }
+
+10 == 10;
+10 != 9;
 """;
 
 
@@ -187,6 +190,14 @@ if (5 < 10) {
             new ExpectedToken(TokenTypes.FALSE, "false"),
             new ExpectedToken(TokenTypes.SEMICOLON, ";"),
             new ExpectedToken(TokenTypes.RBRACE, "}"),
+            new ExpectedToken(TokenTypes.INT, "10"),
+            new ExpectedToken(TokenTypes.EQ, "=="),
+            new ExpectedToken(TokenTypes.INT, "10"),
+            new ExpectedToken(TokenTypes.SEMICOLON, ";"),
+            new ExpectedToken(TokenTypes.INT, "10"),
+            new ExpectedToken(TokenTypes.NOT_EQ, "!="),
+            new ExpectedToken(TokenTypes.INT, "9"),
+            new ExpectedToken(TokenTypes.SEMICOLON, ";"),
             new ExpectedToken(TokenTypes.EOF, ""),
             ];
 
@@ -196,8 +207,8 @@ if (5 < 10) {
         {
             var token = lexer.NextToken();
 
-            Assert.True(token.TokenType == testToken.ExpectedType, GetAssertionMessage($"tests[{ixToken}] - TokenType wrong", testToken, token));
-            Assert.True(token.Literal == testToken.ExpectedLiteral, GetAssertionMessage($"tests[{ixToken}] - Literal wrong", testToken, token));
+            Assert.True(token.TokenType == testToken.ExpectedType, GetAssertionMessage($"tests[{ixToken}] - TokenType wrong.", testToken, token));
+            Assert.True(token.Literal == testToken.ExpectedLiteral, GetAssertionMessage($"tests[{ixToken}] - Literal wrong.", testToken, token));
         }
     }
 
@@ -207,5 +218,5 @@ if (5 < 10) {
     //
 
     private string GetAssertionMessage(string message, ExpectedToken testToken, Token token)
-        => $"{message}. ExpectedType={testToken.ExpectedType}, ActualType={token.TokenType}. ExpectedLiteral={testToken.ExpectedLiteral}, ActualLiteral={token.Literal}.";
+        => $"{message}\nExpectedType: {testToken.ExpectedType}, ActualType: {token.TokenType}.\nExpectedLiteral: {testToken.ExpectedLiteral}, ActualLiteral: {token.Literal}.";
 }
