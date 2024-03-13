@@ -26,8 +26,8 @@ public static class TokenTypes
     public const string NOT_EQ = "!=";
 
     // Delimiters;
-    public const string COMMA = ",";
     public const string SEMICOLON = ";";
+    public const string COMMA = ",";
 
     public const string LPAREN = "(";
     public const string RPAREN = ")";
@@ -52,6 +52,11 @@ public static class TokenTypes
     {
         { "fn", TokenTypes.FUNCTION },
         { "let", TokenTypes.LET },
+        { "true", TokenTypes.TRUE },
+        { "false", TokenTypes.FALSE },
+        { "if", TokenTypes.IF },
+        { "else", TokenTypes.ELSE },
+        { "return", TokenTypes.RETURN },
     }
     .ToFrozenDictionary();
 

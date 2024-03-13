@@ -53,8 +53,40 @@ public class Lexer
                 token = NewToken(tokenType: TokenTypes.ASSIGN, currentChar: CurrentChar);
                 break;
 
+            case '+':
+                token = NewToken(tokenType: TokenTypes.PLUS, currentChar: CurrentChar);
+                break;
+
+            case '-':
+                token = NewToken(tokenType: TokenTypes.MINUS, currentChar: CurrentChar);
+                break;
+
+            case '!':
+                token = NewToken(tokenType: TokenTypes.BANG, currentChar: CurrentChar);
+                break;
+
+            case '*':
+                token = NewToken(tokenType: TokenTypes.ASTERISK, currentChar: CurrentChar);
+                break;
+
+            case '/':
+                token = NewToken(tokenType: TokenTypes.SLASH, currentChar: CurrentChar);
+                break;
+
+            case '<':
+                token = NewToken(tokenType: TokenTypes.LT, currentChar: CurrentChar);
+                break;
+
+            case '>':
+                token = NewToken(tokenType: TokenTypes.GT, currentChar: CurrentChar);
+                break;
+
             case ';':
                 token = NewToken(tokenType: TokenTypes.SEMICOLON, currentChar: CurrentChar);
+                break;
+
+            case ',':
+                token = NewToken(tokenType: TokenTypes.COMMA, currentChar: CurrentChar);
                 break;
 
             case '(':
@@ -63,14 +95,6 @@ public class Lexer
 
             case ')':
                 token = NewToken(tokenType: TokenTypes.RPAREN, currentChar: CurrentChar);
-                break;
-
-            case ',':
-                token = NewToken(tokenType: TokenTypes.COMMA, currentChar: CurrentChar);
-                break;
-
-            case '+':
-                token = NewToken(tokenType: TokenTypes.PLUS, currentChar: CurrentChar);
                 break;
 
             case '{':
