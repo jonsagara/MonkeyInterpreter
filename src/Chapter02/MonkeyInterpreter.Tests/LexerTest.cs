@@ -1,4 +1,4 @@
-namespace MonkeyInterpreter.Chapter01.Tests;
+namespace MonkeyInterpreter.Chapter02.Tests;
 
 public class LexerTest
 {

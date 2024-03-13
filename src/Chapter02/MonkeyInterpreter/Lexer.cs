@@ -1,6 +1,6 @@
 ﻿using System.Collections.Frozen;
 
-namespace MonkeyInterpreter.Chapter01;
+namespace MonkeyInterpreter.Chapter02;
 
 public class Lexer
 {

@@ -1,4 +1,4 @@
-﻿namespace MonkeyInterpreter.Chapter01;
+﻿namespace MonkeyInterpreter.Chapter02;
 
 public readonly record struct Token(
     string TokenType,

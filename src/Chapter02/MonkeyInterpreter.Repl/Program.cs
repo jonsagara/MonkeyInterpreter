@@ -1,4 +1,4 @@
-﻿using MonkeyInterpreter.Chapter01;
+﻿using MonkeyInterpreter.Chapter02;
 
 const string Prompt = ">> ";
 
