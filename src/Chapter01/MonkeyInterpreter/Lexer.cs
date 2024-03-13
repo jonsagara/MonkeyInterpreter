@@ -1,4 +1,6 @@
-﻿namespace MonkeyInterpreter;
+﻿using System.Collections.Frozen;
+
+namespace MonkeyInterpreter;
 
 public class Lexer
 {
@@ -39,8 +41,14 @@ public class Lexer
         // Tokenize the current character.
         Token token = Token.Empty;
 
+        SkipWhiteSpace();
+
         switch (CurrentChar)
         {
+            //
+            // Easily identifiable single character tokens.
+            //
+
             case '=':
                 token = NewToken(tokenType: TokenTypes.ASSIGN, currentChar: CurrentChar);
                 break;
@@ -74,7 +82,38 @@ public class Lexer
                 break;
 
             case '\0':
+                // Reminder: If we have read the whole input string, ReadChar sets CurrentChar to 
+                //   the null terminator character. C# strings don't have a null terminator.
                 token = new Token(TokenType: TokenTypes.EOF, Literal: string.Empty);
+                break;
+
+
+            //
+            // Identifiers or keywords
+            //
+
+            default:
+                if (IsLetter(CurrentChar))
+                {
+                    // SPECIAL CASE: ReadIdentifier advances the character positions for us, so we return
+                    //   here. We don't want to call ReadChar() again.
+                    var identifier = ReadIdentifier();
+                    var tokenType = TokenTypes.GetIdentifierTokenType(identifier);
+                    return new Token(TokenType: tokenType, Literal: identifier);
+                }
+                else if (IsDigit(CurrentChar))
+                {
+                    // SPECIAL CASE: ReadNumber advances the character positions for us, so we return
+                    //   here. We don't want to call ReadChar() again.
+                    var number = ReadNumber();
+                    return new Token(TokenType: TokenTypes.INT, Literal: number);
+                }
+                else
+                {
+                    // It's not a recognized single-character toke, and it's not an identifier. It's an
+                    //   illegal character.
+                    token = NewToken(tokenType: TokenTypes.ILLEGAL, currentChar: CurrentChar);
+                }
                 break;
         }
 
@@ -88,6 +127,26 @@ public class Lexer
     //
     // Private Methods
     //
+
+    private static readonly FrozenSet<char> _whiteSpaceChars = new HashSet<char>
+    {
+        ' ',
+        '\t',
+        '\n',
+        '\r',
+    }
+    .ToFrozenSet();
+
+    /// <summary>
+    /// Read characters from input until we encounter a non-white space character.
+    /// </summary>
+    private void SkipWhiteSpace()
+    {
+        while (_whiteSpaceChars.Contains(CurrentChar))
+        {
+            ReadChar();
+        }
+    }
 
     /// <summary>
     /// Read the next character and advance the current and next character positions.
@@ -110,6 +169,75 @@ public class Lexer
         ReadPosition++;
     }
 
+    private string ReadIdentifier()
+    {
+        // Start of the identifier.
+        var ixStart = Position;
+
+        // Read the input until we find a non-letter character.
+        while (IsLetter(CurrentChar))
+        {
+            ReadChar();
+        }
+
+        // One character past the end of the identifier.
+        var ixEnd = Position;
+
+        // Start of range is inclusive; end is exclusive. Gets the entire identifier.
+        return Input[ixStart..ixEnd];
+    }
+
+    /// <summary>
+    /// Helper method that creates a new <see cref="Token"/> instance, converting the <paramref name="currentChar"/>
+    /// to a string.
+    /// </summary>
     private Token NewToken(string tokenType, char currentChar)
         => new Token(TokenType: tokenType, Literal: currentChar.ToString());
+
+    /// <summary>
+    /// Returns true if <paramref name="currentChar"/> is in [a-zA-Z_]; false otherwise.
+    /// </summary>
+    private bool IsLetter(char currentChar)
+    {
+        if ('a' <= currentChar && currentChar <= 'z')
+        {
+            return true;
+        }
+
+        if ('A' <= currentChar && currentChar <= 'Z')
+        {
+            return true;
+        }
+
+        if (currentChar == '_')
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private string ReadNumber()
+    {
+        // Start of the number string.
+        var ixStart = Position;
+
+        // Read the input until we find a non-digit character.
+        while (IsDigit(CurrentChar))
+        {
+            ReadChar();
+        }
+
+        // One character past the end of the identifier.
+        var ixEnd = Position;
+
+        // Start of range is inclusive; end is exclusive. Gets the entire number.
+        return Input[ixStart..ixEnd];
+    }
+
+    /// <summary>
+    /// Returns true if <paramref name="currentChar"/> is in [0-9]; false otherwise.
+    /// </summary>
+    private bool IsDigit(char currentChar)
+        => '0' <= currentChar && currentChar <= '9';
 }

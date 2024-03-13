@@ -1,4 +1,6 @@
-﻿namespace MonkeyInterpreter;
+﻿using System.Collections.Frozen;
+
+namespace MonkeyInterpreter;
 
 public static class TokenTypes
 {
@@ -40,4 +42,28 @@ public static class TokenTypes
     public const string IF = "IF";
     public const string ELSE = "ELSE";
     public const string RETURN = "RETURN";
+
+
+    //
+    // Lookups
+    //
+
+    private static readonly FrozenDictionary<string, string> _tokenTypesByKeywordLiteral = new Dictionary<string, string>()
+    {
+        { "fn", TokenTypes.FUNCTION },
+        { "let", TokenTypes.LET },
+    }
+    .ToFrozenDictionary();
+
+    /// <summary>
+    /// If the identifier is a keyword, return that keyword's token type. Otherwise, it's a user-defined identifier,
+    /// so return <see cref="TokenTypes.IDENT"/>.
+    /// </summary>
+    public static string GetIdentifierTokenType(string identifier)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(identifier);
+
+        // If it's a keyword, get its token type. Otherwise, it's a user-defined identifier.
+        return _tokenTypesByKeywordLiteral.GetValueOrDefault(identifier, TokenTypes.IDENT);
+    }
 }
